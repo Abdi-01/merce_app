@@ -12,7 +12,8 @@ const LoginPage = (props) => {
     return (
         <View style={style.container}>
             <Image source={{ uri: "https://www.sipayo.com/wp-content/uploads/2017/12/e-commerce.png" }}
-                style={{ width: wp("70%"), height: hp("30%") }} />
+                style={{ width: wp("40%"), height: hp("22%") }}
+            />
             <View >
                 <Input
                     placeholder="username"
