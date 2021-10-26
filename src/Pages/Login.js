@@ -9,6 +9,10 @@ const LoginPage = (props) => {
         props.navigation.navigate("Regis")
     }
 
+    const btLogin = () => {
+
+    }
+
     return (
         <View style={style.container}>
             <Image source={{ uri: "https://www.sipayo.com/wp-content/uploads/2017/12/e-commerce.png" }}

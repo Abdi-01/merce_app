@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Icon, Input, Text } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { API_URL } from '../helper'
 
 const RegisPage = (props) => {
 
@@ -14,13 +16,32 @@ const RegisPage = (props) => {
         if (username == "" || email == "" || password == "" || confPass == "") {
             Alert.alert("Warning ⚠️", "Fill in the form")
         } else {
-            if(email.includes("@")){
-                if(password==confPass){
-                    console.log(username, email, password, confPass)
-                }else{
+            if (email.includes("@")) {
+                if (password == confPass) {
+                    console.log(username, email, password, confPass);
+                    axios.post(API_URL + "/users", {
+                        username,
+                        email,
+                        password,
+                        role: "user",
+                        cart: []
+                    })
+                        .then((res) => {
+                            if (res.data) {
+                                setUsername("")
+                                setEmail("")
+                                setPassword("")
+                                setConfPass("")
+                                Alert.alert("Success ✅", "Register Success")
+                                props.navigation.goBack()
+                            }
+                        }).catch((err) => {
+                            console.log(err)
+                        })
+                } else {
                     Alert.alert("Warning ⚠️", "Password not same")
                 }
-            }else{
+            } else {
                 Alert.alert("Warning ⚠️", "Your email is wrong")
             }
         }
