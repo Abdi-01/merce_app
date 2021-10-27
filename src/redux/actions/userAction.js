@@ -30,3 +30,22 @@ export const loginAction = (username, password) => {
             })
     }
 }
+
+
+export const regisAction = (data) => {
+    return (dispatch) => {
+        axios.post(API_URL + "/users", {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+            role: "user",
+            cart: []
+        }).then((res) => {
+            if (res.data) {
+               
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+}

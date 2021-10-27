@@ -12,38 +12,32 @@ const RegisPage = (props) => {
     const [password, setPassword] = useState("")
     const [confPass, setConfPass] = useState("")
 
-    const btRegis = () => {
-        if (username == "" || email == "" || password == "" || confPass == "") {
-            Alert.alert("Warning ⚠️", "Fill in the form")
-        } else {
-            if (email.includes("@")) {
-                if (password == confPass) {
-                    console.log(username, email, password, confPass);
-                    axios.post(API_URL + "/users", {
-                        username,
-                        email,
-                        password,
-                        role: "user",
-                        cart: []
-                    })
-                        .then((res) => {
-                            if (res.data) {
-                                setUsername("")
-                                setEmail("")
-                                setPassword("")
-                                setConfPass("")
-                                Alert.alert("Success ✅", "Register Success")
-                                props.navigation.goBack()
-                            }
-                        }).catch((err) => {
-                            console.log(err)
-                        })
-                } else {
-                    Alert.alert("Warning ⚠️", "Password not same")
-                }
+    const btRegis = async () => {
+        try {
+            if (username == "" || email == "" || password == "" || confPass == "") {
+                Alert.alert("Warning ⚠️", "Fill in the form")
             } else {
-                Alert.alert("Warning ⚠️", "Your email is wrong")
+                if (email.includes("@")) {
+                    if (password == confPass) {
+                        console.log(username, email, password, confPass);
+
+                        setUsername("")
+                        setEmail("")
+                        setPassword("")
+                        setConfPass("")
+                        Alert.alert("Success ✅", "Register Success")
+                        props.navigation.goBack()
+
+                    } else {
+                        Alert.alert("Warning ⚠️", "Password not same")
+                    }
+                } else {
+                    Alert.alert("Warning ⚠️", "Your email is wrong")
+                }
             }
+
+        } catch (error) {
+            console.log(error)
         }
     }
     return (
