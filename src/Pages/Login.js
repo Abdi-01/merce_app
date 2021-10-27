@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { StackActions } from '@react-navigation/routers';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Icon, Image, Input, Text } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../redux/actions';
 
 const LoginPage = (props) => {
@@ -11,6 +12,26 @@ const LoginPage = (props) => {
 
     const [username, setUsername] = useState("")
     const [password, setPass] = useState("")
+
+    // useSelctor : pengganti mapToProps pada class component
+    const { iduser } = useSelector((state) => {
+        return {
+            iduser: state.userReducer.id
+        }
+    })
+
+    // versi componentDidMount
+    useEffect(() => {
+
+    }, [])
+
+    // versi componentDidUpdate
+    useEffect(()=>{
+        if(iduser){
+            // page login yg awalnya menjadi page pertama, digantikan oleh page home/tabnav
+            props.navigation.dispatch(StackActions.replace("TabNav"))
+        }
+    })
 
     const btToRegis = () => {
         props.navigation.navigate("Regis")
