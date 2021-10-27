@@ -1,11 +1,13 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { Button, Icon, Input, Text } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { API_URL } from '../helper'
+import { regisAction } from '../redux/actions'
+import { useDispatch } from 'react-redux'
 
 const RegisPage = (props) => {
+    // useDispatch : digunakan untuk menjalankan fungsi dari actions, pengganti connect pada class component
+    const dispatch = useDispatch()
 
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
@@ -20,14 +22,17 @@ const RegisPage = (props) => {
                 if (email.includes("@")) {
                     if (password == confPass) {
                         console.log(username, email, password, confPass);
-
-                        setUsername("")
-                        setEmail("")
-                        setPassword("")
-                        setConfPass("")
-                        Alert.alert("Success ✅", "Register Success")
-                        props.navigation.goBack()
-
+                        let res = dispatch(regisAction(username, email, password))
+                        if (res) {
+                            setUsername("")
+                            setEmail("")
+                            setPassword("")
+                            setConfPass("")
+                            Alert.alert("Success ✅", "Register Success")
+                            props.navigation.goBack()
+                        } else {
+                            Alert.alert("Warning ⚠️", "Register Not Success")
+                        }
                     } else {
                         Alert.alert("Warning ⚠️", "Password not same")
                     }
@@ -88,4 +93,5 @@ const style = StyleSheet.create({
         margin: hp(5)
     }
 })
+
 export default RegisPage

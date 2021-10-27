@@ -42,7 +42,9 @@ export const regisAction = (data) => {
             cart: []
         }).then((res) => {
             if (res.data) {
-               
+                return true
+            } else {
+                return false
             }
         }).catch((err) => {
             console.log(err)
