@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Icon, Image, Input, Text } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../redux/actions';
 
 const LoginPage = (props) => {
+
+    const dispatch = useDispatch()
+
+    const [username, setUsername] = useState("")
+    const [password, setPass] = useState("")
 
     const btToRegis = () => {
         props.navigation.navigate("Regis")
     }
 
     const btLogin = () => {
-
+        dispatch(loginAction(username, password))
     }
 
     return (
@@ -30,6 +37,7 @@ const LoginPage = (props) => {
                     }
                     inputContainerStyle={{ backgroundColor: "white" }}
                     containerStyle={{ width: wp("70%") }}
+                    onChangeText={val => setUsername(val)}
                 />
                 <Input
                     placeholder="password"
@@ -43,10 +51,12 @@ const LoginPage = (props) => {
                     inputContainerStyle={{ backgroundColor: "white" }}
                     containerStyle={{ width: wp("70%") }}
                     secureTextEntry
+                    onChangeText={val => setPass(val)}
                 />
                 <Button
                     title="Sign In"
                     containerStyle={{ width: wp("60%"), alignSelf: "center" }}
+                    onPress={btLogin}
                 />
             </View>
             <Text style={style.textA}>Not have account ?

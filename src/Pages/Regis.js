@@ -32,7 +32,7 @@ const RegisPage = (props) => {
                             Alert.alert(res.title, res.message)
                             props.navigation.goBack()
                         } else {
-                            Alert.alert("Warning ⚠️", "Register Not Success")
+                            Alert.alert(res.title, res.message)
                         }
                     } else {
                         Alert.alert("Warning ⚠️", "Password not same")
