@@ -32,22 +32,23 @@ export const loginAction = (username, password) => {
 }
 
 
-export const regisAction = (data) => {
-    return (dispatch) => {
-        axios.post(API_URL + "/users", {
-            username: data.username,
-            email: data.email,
-            password: data.password,
-            role: "user",
-            cart: []
-        }).then((res) => {
+export const regisAction = (username, email, password) => {
+    return async (dispatch) => {
+        try {
+            let res = await axios.post(API_URL + "/users", {
+                username,
+                email,
+                password,
+                role: "user",
+                cart: []
+            })
             if (res.data) {
-                return true
+                return {success:true, title:"Success ✅", message:"Register Success"}
             } else {
-                return false
+                return {success:false, title:"Warning ⚠️", message:"Register Not Success"}
             }
-        }).catch((err) => {
-            console.log(err)
-        })
+        } catch (error) {
+            console.log(error)
+        }
     }
 }

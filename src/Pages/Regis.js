@@ -22,13 +22,14 @@ const RegisPage = (props) => {
                 if (email.includes("@")) {
                     if (password == confPass) {
                         console.log(username, email, password, confPass);
-                        let res = dispatch(regisAction(username, email, password))
-                        if (res) {
+                        let res = await dispatch(regisAction(username, email, password))
+                        console.log(res)
+                        if (res.success) {
                             setUsername("")
                             setEmail("")
                             setPassword("")
                             setConfPass("")
-                            Alert.alert("Success ✅", "Register Success")
+                            Alert.alert(res.title, res.message)
                             props.navigation.goBack()
                         } else {
                             Alert.alert("Warning ⚠️", "Register Not Success")

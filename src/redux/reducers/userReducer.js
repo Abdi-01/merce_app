@@ -13,6 +13,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             delete action.payload.password
             return { ...state, ...action.payload }
         default:
-            break;
+            return state
     }
 }
