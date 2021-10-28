@@ -25,7 +25,7 @@ const TabNavigation = (props) => {
                 })
             }
         >
-            <Tab.Screen name="Home" component={HomePage} />
+            <Tab.Screen name="Home" component={HomePage} options={{ headerShown: false }} />
             <Tab.Screen name="Cart" component={CartPage} options={{ headerShown: false }} />
         </Tab.Navigator>
     )

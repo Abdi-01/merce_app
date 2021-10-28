@@ -6,10 +6,10 @@ export const getProductsAction = () => {
         try {
             let get = await axios.get(API_URL + "/products")
             console.log("ambil data products", get.data)
-            // dispatch({
-            //     type: "GET_PRODUCTS",
-            //     payload: get.data
-            // })
+            dispatch({
+                type: "GET_PRODUCTS",
+                payload: get.data
+            })
         } catch (error) {
             console.log(error)
         }

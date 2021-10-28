@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native'
 import { Button, Text } from "react-native-elements"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProductsAction } from '../redux/actions';
 
 const HomePage = (props) => {
@@ -15,6 +15,12 @@ const HomePage = (props) => {
     useEffect(() => {
         dispatch(getProductsAction())
     }, [])
+
+    const { products } = useSelector((state) => {
+        return {
+            products: state.productReducer.listProducts
+        }
+    })
 
     return (
         <View>
