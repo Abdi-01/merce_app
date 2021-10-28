@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, View } from 'react-native'
 import { Button, Header, Icon, Image, SearchBar, Text } from "react-native-elements"
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useDispatch, useSelector } from 'react-redux';
+import CardProduct from '../Components/CardProduct';
 import { getProductsAction } from '../redux/actions';
 
 const HomePage = (props) => {
@@ -29,6 +30,15 @@ const HomePage = (props) => {
         }
     })
 
+    const renderProducts = () => {
+        return products.map((val, idx) => {
+            return (
+                <View style={{ width: wp(48) }}>
+                    <CardProduct data={val} />
+                </View>
+            )
+        })
+    }
     return (
         <View style={{ flex: 1, backgroundColor: "#dcdde1" }}>
             <Header
@@ -54,21 +64,24 @@ const HomePage = (props) => {
                     </View>
                 }
             />
-            <View>
-                <FlatList
-                    data={banner}
-                    renderItem={
-                        ({ item }) => (
-                            <Image source={{ uri: item }} style={{ width: wp(90), height: hp(25) }} />
-                        )
-                    }
-                    keyExtractor={(item, index) => index.toString()}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />
-            </View>
-            <Text h2>Home Page</Text>
-
+            <ScrollView>
+                <View>
+                    <FlatList
+                        data={banner}
+                        renderItem={
+                            ({ item }) => (
+                                <Image source={{ uri: item }} style={{ width: wp(90), height: hp(25) }} />
+                            )
+                        }
+                        keyExtractor={(item, index) => index.toString()}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+                <View style={style.viewProduct}>
+                    {renderProducts()}
+                </View>
+            </ScrollView>
         </View>
     )
 }
@@ -85,6 +98,12 @@ const style = StyleSheet.create({
     inputSearch: {
         backgroundColor: "white",
         height: hp(6)
+    },
+    viewProduct: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-evenly"
     }
 })
 
