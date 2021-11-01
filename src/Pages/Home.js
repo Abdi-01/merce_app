@@ -34,7 +34,9 @@ const HomePage = (props) => {
         return products.map((val, idx) => {
             return (
                 <View style={{ width: wp(48) }}>
-                    <CardProduct data={val} toDetail={() => props.navigation.navigate("Detail")} />
+                    <CardProduct data={val}
+                        toDetail={() => props.navigation.navigate("Detail", { detail: val })}
+                    />
                 </View>
             )
         })
