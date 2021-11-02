@@ -9,7 +9,7 @@ const DetailPage = (props) => {
     const { detail } = props.route.params
 
     const dispatch = useDispatch()
-    
+
     const [qty, setQty] = useState(1)
 
     const { cartUser, iduser } = useSelector((state) => {
@@ -19,19 +19,31 @@ const DetailPage = (props) => {
         }
     })
 
-    const btAddToCart = () => {
-        console.log(qty)
-        console.log(typeof qty)
-        // namaProduk, harga, qty, subtotal, image
-        let temp = [...cartUser]
-        temp.push({
-            nama: detail.nama,
-            harga: detail.harga,
-            qty,
-            subTotal: detail.harga * qty,
-            image: detail.images[0]
-        })
-        console.log("data add to cart", temp)
+    const btAddToCart = async () => {
+        try {
+            console.log(qty)
+            console.log(typeof qty)
+            // namaProduk, harga, qty, subtotal, image
+            let temp = [...cartUser]
+            temp.push({
+                nama: detail.nama,
+                harga: detail.harga,
+                qty,
+                subTotal: detail.harga * qty,
+                image: detail.images[0]
+            })
+            console.log("data add to cart", temp)
+
+            let results = await dispatch(updateCartAction(temp, iduser))
+            console.log(results)
+            if(results.success){
+                Alert.alert("Success ✅", "Add To Cart Success")
+            }else{
+                Alert.alert("Warning ⚠️", "Add To Cart Failed")
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 

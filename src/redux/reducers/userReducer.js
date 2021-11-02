@@ -12,6 +12,9 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             console.log("DATA DARI ACTION ==>", action.payload)
             delete action.payload.password
             return { ...state, ...action.payload }
+        case "UPDATE_CART":
+            console.log("Reducer",action.payload)
+            return { ...state, cart: action.payload }
         default:
             return state
     }

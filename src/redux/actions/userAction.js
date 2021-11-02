@@ -60,10 +60,19 @@ export const updateCartAction = (data, iduser) => {
                 cart: data
             })
 
-            console.log("✅ ADD TO CART ", res.data)
+
+            if (res.data.id) {
+                console.log(res.data)
+                // update data cart pada reducer
+                dispatch({
+                    type: "UPDATE_CART",
+                    payload: res.data.cart
+                })
+                return { success: true }
+            }
+
         } catch (error) {
             console.log(error)
         }
     }
-
 }
