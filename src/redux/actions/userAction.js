@@ -43,12 +43,27 @@ export const regisAction = (username, email, password) => {
                 cart: []
             })
             if (res.data) {
-                return {success:true, title:"Success ✅", message:"Register Success"}
+                return { success: true, title: "Success ✅", message: "Register Success" }
             } else {
-                return {success:false, title:"Warning ⚠️", message:"Register Not Success"}
+                return { success: false, title: "Warning ⚠️", message: "Register Not Success" }
             }
         } catch (error) {
             console.log(error)
         }
     }
+}
+
+export const updateCartAction = (data, iduser) => {
+    return async (dispatch) => {
+        try {
+            let res = await axios.patch(API_URL + `/users/${iduser}`, {
+                cart: data
+            })
+
+            console.log("✅ ADD TO CART ", res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 }

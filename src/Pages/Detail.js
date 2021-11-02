@@ -2,15 +2,37 @@ import React, { useState } from 'react';
 import { Alert, FlatList, Image, KeyboardAvoidingView, ScrollView, View } from 'react-native';
 import { Button, Card, Icon, Input, Text } from 'react-native-elements';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateCartAction } from '../redux/actions/userAction';
 
 const DetailPage = (props) => {
     const { detail } = props.route.params
 
+    const dispatch = useDispatch()
+    
     const [qty, setQty] = useState(1)
+
+    const { cartUser, iduser } = useSelector((state) => {
+        return {
+            cartUser: state.userReducer.cart,
+            iduser: state.userReducer.id
+        }
+    })
 
     const btAddToCart = () => {
         console.log(qty)
         console.log(typeof qty)
+        // namaProduk, harga, qty, subtotal, image
+        let temp = [...cartUser]
+        temp.push({
+            nama: detail.nama,
+            harga: detail.harga,
+            qty,
+            subTotal: detail.harga * qty,
+            image: detail.images[0]
+        })
+        console.log("data add to cart", temp)
+
     }
 
     const btInc = () => {
@@ -52,9 +74,10 @@ const DetailPage = (props) => {
                         <Text style={{ textAlign: "justify" }}>{detail.deskripsi}</Text>
                     </ScrollView>
                     <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                        <Button type="outline" icon={
-                            <Icon type="feather" name="minus" size={16} />
-                        }
+                        <Button type="outline"
+                            icon={
+                                <Icon type="feather" name="minus" size={16} />
+                            }
                             disabled={qty == 1}
                             onPress={btDec}
                         />
