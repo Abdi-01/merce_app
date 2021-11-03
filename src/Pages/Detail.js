@@ -26,6 +26,7 @@ const DetailPage = (props) => {
             // namaProduk, harga, qty, subtotal, image
             let temp = [...cartUser]
             temp.push({
+                idproduct: detail.id,
                 nama: detail.nama,
                 harga: detail.harga,
                 qty,
@@ -36,9 +37,9 @@ const DetailPage = (props) => {
 
             let results = await dispatch(updateCartAction(temp, iduser))
             console.log(results)
-            if(results.success){
+            if (results.success) {
                 Alert.alert("Success ✅", "Add To Cart Success")
-            }else{
+            } else {
                 Alert.alert("Warning ⚠️", "Add To Cart Failed")
             }
         } catch (error) {
