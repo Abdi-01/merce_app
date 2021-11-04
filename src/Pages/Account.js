@@ -1,16 +1,36 @@
-import React from 'react';
-import { ImageBackground, View } from 'react-native'
-import { Avatar, Text } from 'react-native-elements';
+import React, { useState } from 'react';
+import { ImageBackground, StyleSheet, View } from 'react-native'
+import { Avatar, Badge, Card, Text } from 'react-native-elements';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const AccountPage = (props) => {
+
+    const [menu, setMenu] = useState({
+        account: [
+            {
+                title: "Edit Profile",
+                icon: "account-edit",
+                press: () => { }
+            },
+            {
+                title: "Transactions",
+                icon: "cart",
+                press: () => { }
+            },
+            {
+                title: "Promo",
+                icon: "card-bulleted-outline",
+                press: () => { }
+            }
+        ]
+    })
 
     return (
         <View style={{ flex: 1, backgroundColor: "white", paddingTop: hp(7) }}>
             <ImageBackground source={{ uri: "https://img4.goodfon.com/wallpaper/nbig/a/45/ralli-moto-dakar-dakar-sport-rally-skorost-pesok-gonshchik-m.jpg" }}
                 style={{ width: wp(100), height: hp(40) }}
             >
-                <View style={{ backgroundColor: "rgba(0,0,0,0.5)", height: "100%", justifyContent: "center", alignItems: "center" }}>
+                <View style={style.imgBackground}>
                     <Avatar
                         source={{ uri: "https://api.duniagames.co.id/api/content/upload/file/8143860661599124172.jpg" }}
                         size={120}
@@ -25,8 +45,27 @@ const AccountPage = (props) => {
                     <Text h3 style={{ color: "white" }}>Eduardo</Text>
                 </View>
             </ImageBackground>
+            <Card containerStyle={style.cardListMenu}>
+                <Badge value="Verified Account" />
+            </Card>
         </View>
     )
 };
+
+const style = StyleSheet.create({
+    imgBackground: {
+        backgroundColor: "rgba(0,0,0,0.5)",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    cardListMenu: {
+        flex: 1,
+        margin: 0,
+        marginTop: hp(-5),
+        borderTopRightRadius: wp(10),
+        borderTopLeftRadius: wp(10)
+    }
+})
 
 export default AccountPage
