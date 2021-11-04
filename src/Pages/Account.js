@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native'
-import { Avatar, Badge, Card, Text } from 'react-native-elements';
+import { Avatar, Badge, Card, ListItem, Text, Icon } from 'react-native-elements';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const AccountPage = (props) => {
@@ -22,8 +22,41 @@ const AccountPage = (props) => {
                 icon: "card-bulleted-outline",
                 press: () => { }
             }
+        ],
+        setting: [
+            {
+                title: "Configuration",
+                icon: "cog-outline",
+                press: () => { }
+            },
+            {
+                title: "Privacy and Police",
+                icon: "shield-account",
+                press: () => { }
+            },
+            {
+                title: "Logout",
+                icon: "logout",
+                press: () => { }
+            }
         ]
     })
+
+    const printListMenu = () => {
+        let { account } = menu
+        return account.map((item, idx) => {
+            return <ListItem
+                key={idx}
+                onPress={item.press}
+            >
+                <Icon name={item.icon} size={25} type="material-community" />
+                <ListItem.Content>
+                    <ListItem.Title>{item.title}</ListItem.Title>
+                </ListItem.Content>
+                <ListItem.Chevron size={hp(5)}/>
+            </ListItem>
+        })
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: "white", paddingTop: hp(7) }}>
@@ -47,6 +80,9 @@ const AccountPage = (props) => {
             </ImageBackground>
             <Card containerStyle={style.cardListMenu}>
                 <Badge value="Verified Account" />
+                <Text h4>Account</Text>
+                {printListMenu()}
+                <Text h4>Setting</Text>
             </Card>
         </View>
     )
