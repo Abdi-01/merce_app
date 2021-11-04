@@ -10,9 +10,8 @@ const AccountPage = (props) => {
             <ImageBackground source={{ uri: "https://img4.goodfon.com/wallpaper/nbig/a/45/ralli-moto-dakar-dakar-sport-rally-skorost-pesok-gonshchik-m.jpg" }}
                 style={{ width: wp(100), height: hp(40) }}
             >
-                <View style={{ backgroundColor: "rgba(0,0,0,0.5)", height: "100%", justifyContent: "center" }}>
+                <View style={{ backgroundColor: "rgba(0,0,0,0.5)", height: "100%", justifyContent: "center", alignItems: "center" }}>
                     <Avatar
-                        containerStyle={{ alignSelf: "center" }}
                         source={{ uri: "https://api.duniagames.co.id/api/content/upload/file/8143860661599124172.jpg" }}
                         size={120}
                         rounded
@@ -23,7 +22,7 @@ const AccountPage = (props) => {
                             iconStyle={{ fontSize: 20 }}
                         />
                     </Avatar>
-                    <Text h3 style={{ color: "white", textAlign:"center" }}>Eduardo</Text>
+                    <Text h3 style={{ color: "white" }}>Eduardo</Text>
                 </View>
             </ImageBackground>
         </View>
