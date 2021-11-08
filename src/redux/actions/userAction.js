@@ -35,6 +35,20 @@ export const loginAction = (username, password) => {
     }
 }
 
+export const logOutAction = () => {
+    return async (dispatch) => {
+        try {
+            await AsyncStorage.removeItem("data")
+            dispatch({
+                type: "LOGOUT"
+            })
+
+            return { success: true }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 
 export const regisAction = (username, email, password) => {
     return async (dispatch) => {

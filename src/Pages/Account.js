@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, ScrollView, StyleSheet, View } from 'react-native'
 import { Avatar, Badge, Card, ListItem, Text, Icon, Overlay } from 'react-native-elements';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOutAction } from "../redux/actions"
 
 const AccountPage = (props) => {
+
+    const dispatch = useDispatch()
 
     const { username, email } = useSelector((state) => {
         return {
@@ -45,7 +48,7 @@ const AccountPage = (props) => {
             {
                 title: "Logout",
                 icon: "logout",
-                press: () => { }
+                press: () => dispatch(logOutAction())
             }
         ]
     })
@@ -66,6 +69,14 @@ const AccountPage = (props) => {
         })
     }
 
+    useEffect(() => {
+        if (!username) {
+            props.navigation.reset({
+                index: 0,
+                routes: [{ name: "Login" }]
+            })
+        }
+    })
 
     let { account, setting } = menu
     return (
