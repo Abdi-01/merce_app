@@ -66,15 +66,17 @@ const TransactionsPage = () => {
     }
 
     const renderDetailTransaksi = () => {
-        return listTransaksi[selectedIdx].detail.map((value, index) => {
-            return <Card containerStyle={{ width: wp(90), margin: 0 }}>
-                <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
-                    <Text style={{ width: wp(28), textAlign: "center" }}>{value.nama}</Text>
-                    <Text style={{ width: wp(34), textAlign: "center" }}>{value.qty}</Text>
-                    <Text style={{ width: wp(30), textAlign: "center" }}>Rp. {value.subTotal}</Text>
-                </View>
-            </Card>
-        })
+        if (selectedIdx) {
+            return listTransaksi[selectedIdx].detail.map((value, index) => {
+                return <Card containerStyle={{ width: wp(90), margin: 0 }}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+                        <Text style={{ width: wp(28), textAlign: "center" }}>{value.nama}</Text>
+                        <Text style={{ width: wp(34), textAlign: "center" }}>{value.qty}</Text>
+                        <Text style={{ width: wp(30), textAlign: "center" }}>Rp. {value.subTotal}</Text>
+                    </View>
+                </Card>
+            })
+        }
     }
 
     return (
@@ -90,10 +92,13 @@ const TransactionsPage = () => {
                     </View>
                 </Card>
                 {renderDetailTransaksi()}
-                <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical:hp(2) }}>
-                    <Text style={{ fontSize: 20, color: "gray" }}>Total Payment</Text>
-                    <Text style={{ fontSize: 20, color: "skyblue", fontWeight:"bold" }}>Rp. {listTransaksi[selectedIdx].totalPayment}</Text>
-                </View>
+                {
+                    selectedIdx &&
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
+                        <Text style={{ fontSize: 20, color: "gray" }}>Total Payment</Text>
+                        <Text style={{ fontSize: 20, color: "skyblue", fontWeight: "bold" }}>Rp. {listTransaksi[selectedIdx].totalPayment}</Text>
+                    </View>
+                }
             </Overlay>
         </View>
     )
