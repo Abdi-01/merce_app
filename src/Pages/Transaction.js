@@ -66,7 +66,8 @@ const TransactionsPage = () => {
     }
 
     const renderDetailTransaksi = () => {
-        if (selectedIdx) {
+        console.log(selectedIdx)
+        if (selectedIdx >= 0 && selectedIdx !== null) {
             return listTransaksi[selectedIdx].detail.map((value, index) => {
                 return <Card containerStyle={{ width: wp(90), margin: 0 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
@@ -82,7 +83,10 @@ const TransactionsPage = () => {
     return (
         <View>
             {renderTransaksi()}
-            <Overlay visible={visible} onBackdropPress={() => setVisible(!visible)}>
+            <Overlay visible={visible} onBackdropPress={() => {
+                setVisible(!visible)
+                setSelectedIdx(null)
+            }}>
                 <Text h4 style={{ textAlign: "center", marginVertical: hp(2) }}>Detail Transaction</Text>
                 <Card containerStyle={{ width: wp(90), margin: 0 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
@@ -93,11 +97,11 @@ const TransactionsPage = () => {
                 </Card>
                 {renderDetailTransaksi()}
                 {
-                    selectedIdx &&
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
-                        <Text style={{ fontSize: 20, color: "gray" }}>Total Payment</Text>
-                        <Text style={{ fontSize: 20, color: "skyblue", fontWeight: "bold" }}>Rp. {listTransaksi[selectedIdx].totalPayment}</Text>
-                    </View>
+                    selectedIdx >= 0 && selectedIdx !== null ?
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
+                            <Text style={{ fontSize: 20, color: "gray" }}>Total Payment</Text>
+                            <Text style={{ fontSize: 20, color: "skyblue", fontWeight: "bold" }}>Rp. {listTransaksi[selectedIdx].totalPayment}</Text>
+                        </View> : null
                 }
             </Overlay>
         </View>
