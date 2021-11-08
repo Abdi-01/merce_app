@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Badge, Button, Card, Overlay, Text } from 'react-native-elements';
 import { API_URL } from '../helper';
 import axios from 'axios';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const TransactionsPage = () => {
     // 1. Mengambil data userTransactions dari json-server
@@ -41,7 +42,7 @@ const TransactionsPage = () => {
         return listTransaksi.map((value, index) => {
             return (
                 <Card >
-                    <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems:"center" }}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
                         <Text>{value.date}</Text>
                         <Text>Rp. {value.totalPayment}</Text>
                         <Badge
@@ -50,8 +51,11 @@ const TransactionsPage = () => {
                         />
                         <Button
                             title="Detail"
+                            type="clear"
                             onPress={() => {
+                                // set visible modal yang awalnya false dinegasi menjadi true
                                 setVisible(!visible);
+                                // set index data transaksi yang dipilih
                                 setSelectedIdx(index)
                             }}
                         />
@@ -62,14 +66,30 @@ const TransactionsPage = () => {
     }
 
     const renderDetailTransaksi = () => {
-        return listTransaksi[selectedIdx].detail.map()
+        return listTransaksi[selectedIdx].detail.map((value, index) => {
+            return <Card containerStyle={{ width: wp(90), margin: 0 }}>
+                <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+                    <Text style={{textAlign:"center"}}>{value.nama}</Text>
+                    <Text style={{textAlign:"center"}}>{value.qty}</Text>
+                    <Text style={{textAlign:"center"}}>Rp. {value.subTotal}</Text>
+                </View>
+            </Card>
+        })
     }
 
     return (
         <View>
             {renderTransaksi()}
-            <Overlay visible={true}>
-
+            <Overlay visible={visible} onBackdropPress={() => setVisible(!visible)}>
+                <Text style={{ textAlign: "center" }}>Detail Transaction</Text>
+                <Card containerStyle={{ width: wp(90), margin: 0 }}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                        <Text style={{textAlign:"center"}}>Name</Text>
+                        <Text style={{textAlign:"center"}}>Qty</Text>
+                        <Text style={{textAlign:"center"}}>Sub. Total</Text>
+                    </View>
+                </Card>
+                {renderDetailTransaksi()}
             </Overlay>
         </View>
     )
