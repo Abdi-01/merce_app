@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackActions } from '@react-navigation/routers';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -22,12 +23,23 @@ const LoginPage = (props) => {
 
     // versi componentDidMount
     useEffect(() => {
-
+        keepLogin()
     }, [])
 
+    const keepLogin = async () => {
+        try {
+            let check = await AsyncStorage.getItem("data")
+            if (check) {
+                let { username, password } = JSON.parse(check)
+                dispatch(loginAction(username, password))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
     // versi componentDidUpdate
-    useEffect(()=>{
-        if(iduser){
+    useEffect(() => {
+        if (iduser) {
             // page login yg awalnya menjadi page pertama, digantikan oleh page home/tabnav
             props.navigation.dispatch(StackActions.replace("TabNav"))
         }
