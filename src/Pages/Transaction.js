@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Badge, Button, Card, Overlay, Text } from 'react-native-elements';
 import { API_URL } from '../helper';
 import axios from 'axios';
 
@@ -16,7 +16,10 @@ const TransactionsPage = () => {
     // ⚠️namaState⚠️ pada functional component == ⚠️this.state{}⚠️ pada class component
     // ⚠️namaSetState⚠️ pada functional component == ⚠️this.setState({})⚠️ pada class component
 
-    const [listTransaksi, setListTransaksi]=useState([]);
+    const [listTransaksi, setListTransaksi] = useState([]);
+    const [visible, setVisible] = useState(false);
+
+    const [selectedIdx, setSelectedIdx] = useState(null)
 
     const getUserTransactions = () => {
         axios.get(API_URL + `/userTransactions`)
@@ -33,17 +36,41 @@ const TransactionsPage = () => {
         getUserTransactions()
     }, [])
 
-    const renderTransaksi=()=>{
-        return listTransaksi.map((value,index)=>{
-            // return(
-
-            // )
+    const renderTransaksi = () => {
+        console.log(listTransaksi)
+        return listTransaksi.map((value, index) => {
+            return (
+                <Card >
+                    <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems:"center" }}>
+                        <Text>{value.date}</Text>
+                        <Text>Rp. {value.totalPayment}</Text>
+                        <Badge
+                            value={value.status}
+                            status="warning"
+                        />
+                        <Button
+                            title="Detail"
+                            onPress={() => {
+                                setVisible(!visible);
+                                setSelectedIdx(index)
+                            }}
+                        />
+                    </View>
+                </Card>
+            )
         })
+    }
+
+    const renderDetailTransaksi = () => {
+        return listTransaksi[selectedIdx].detail.map()
     }
 
     return (
         <View>
-            <Text>Transactions Page</Text>
+            {renderTransaksi()}
+            <Overlay visible={true}>
+
+            </Overlay>
         </View>
     )
 }

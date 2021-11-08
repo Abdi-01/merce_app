@@ -33,7 +33,7 @@ const HomePage = (props) => {
     const renderProducts = () => {
         return products.map((val, idx) => {
             return (
-                <View style={{ width: wp(48) }}>
+                <View style={{ width: wp(46) }}>
                     <CardProduct data={val}
                         toDetail={() => props.navigation.navigate("Detail", { detail: val })}
                     />
@@ -105,7 +105,8 @@ const style = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-evenly"
+        justifyContent:"space-between",
+        marginHorizontal:wp(3)
     }
 })
 
