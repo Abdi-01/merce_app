@@ -98,10 +98,16 @@ const TransactionsPage = () => {
                 {renderDetailTransaksi()}
                 {
                     selectedIdx >= 0 && selectedIdx !== null ?
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
-                            <Text style={{ fontSize: 20, color: "gray" }}>Total Payment</Text>
-                            <Text style={{ fontSize: 20, color: "skyblue", fontWeight: "bold" }}>Rp. {listTransaksi[selectedIdx].totalPayment}</Text>
-                        </View> : null
+                        <View>
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
+                                <Text style={{ fontSize: 20, color: "gray" }}>Note</Text>
+                                <Text style={{ fontSize: 20, color: "skyblue"}}>{listTransaksi[selectedIdx].note}</Text>
+                            </View> 
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
+                                <Text style={{ fontSize: 20, color: "gray" }}>Total Payment</Text>
+                                <Text style={{ fontSize: 20, color: "skyblue", fontWeight: "bold" }}>Rp. {listTransaksi[selectedIdx].totalPayment}</Text>
+                            </View> 
+                        </View>:null
                 }
             </Overlay>
         </View>
