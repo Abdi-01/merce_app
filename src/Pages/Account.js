@@ -3,7 +3,8 @@ import { ImageBackground, ScrollView, StyleSheet, View } from 'react-native'
 import { Avatar, Badge, Card, ListItem, Text, Icon, Overlay } from 'react-native-elements';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useDispatch, useSelector } from 'react-redux';
-import { logOutAction } from "../redux/actions"
+import { logOutAction } from "../redux/actions";
+import ImagePicker from "react-native-image-crop-picker"
 
 const AccountPage = (props) => {
 
@@ -54,6 +55,9 @@ const AccountPage = (props) => {
     })
 
     const [visible, setVisible] = useState(false)
+
+    // state untuk menyimpan alamat gambar
+    const [gambar, setGambar] = useState("https://api.duniagames.co.id/api/content/upload/file/8143860661599124172.jpg")
     const printListMenu = (listMenu) => {
         return listMenu.map((item, idx) => {
             return <ListItem
@@ -78,6 +82,21 @@ const AccountPage = (props) => {
         }
     })
 
+    // Fungsi access camera
+
+    const btCamera = () => {
+        ImagePicker.openCamera({
+            width: wp(40),
+            height: wp(40),
+            cropping: true,
+            mediaType: "photo"
+        }).then((image) => {
+            console.log("Image from camera :", image)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
     let { account, setting } = menu
     return (
         <View style={{ flex: 1, backgroundColor: "white", paddingTop: hp(7) }}>
@@ -86,7 +105,7 @@ const AccountPage = (props) => {
             >
                 <View style={style.imgBackground}>
                     <Avatar
-                        source={{ uri: "https://api.duniagames.co.id/api/content/upload/file/8143860661599124172.jpg" }}
+                        source={{ uri: gambar }}
                         size={120}
                         rounded
                     >
@@ -118,7 +137,7 @@ const AccountPage = (props) => {
                     </ListItem.Content>
                     <ListItem.Chevron size={wp(8)} />
                 </ListItem>
-                <ListItem containerStyle={{ width: wp(68) }}>
+                <ListItem containerStyle={{ width: wp(68) }} onPress={btCamera}>
                     <Icon name="camera" type="feather" />
                     <ListItem.Content>
                         <ListItem.Title>Open Camera</ListItem.Title>

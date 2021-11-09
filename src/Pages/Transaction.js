@@ -4,6 +4,7 @@ import { Badge, Button, Card, Overlay, Text } from 'react-native-elements';
 import { API_URL } from '../helper';
 import axios from 'axios';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TransactionsPage = () => {
     // 1. Mengambil data userTransactions dari json-server
@@ -22,15 +23,29 @@ const TransactionsPage = () => {
 
     const [selectedIdx, setSelectedIdx] = useState(null)
 
-    const getUserTransactions = () => {
-        axios.get(API_URL + `/userTransactions`)
-            .then((res) => {
-                // menyimpan data pada state
-                setListTransaksi(res.data)
-                console.log("user transactions", res.data)
-            }).catch((err) => {
-                console.log(err)
-            })
+    const getUserTransactions = async () => {
+        try {
+            // mengambil data user dar asyncstorage
+            let check = await AsyncStorage.getItem("data")
+            
+            // pemeriksaan jika data user didapatkan
+            if (check) {
+                // merubah data user pada varible check yg brupa string menjadi object, 
+                // dan kemudian di destructure property id dari data user
+                let { id } = JSON.parse(check);
+                console.log("iduser",id)
+                // get data transaksi
+                let get = await axios.get(API_URL + `/userTransactions?iduser=${id}`)
+
+                if (get.data) {
+                    // menyimpan data pada state
+                    setListTransaksi(get.data)
+                    console.log("user transactions", get.data)
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
@@ -101,13 +116,13 @@ const TransactionsPage = () => {
                         <View>
                             <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
                                 <Text style={{ fontSize: 20, color: "gray" }}>Note</Text>
-                                <Text style={{ fontSize: 20, color: "skyblue"}}>{listTransaksi[selectedIdx].note}</Text>
-                            </View> 
+                                <Text style={{ fontSize: 20, color: "skyblue" }}>{listTransaksi[selectedIdx].note}</Text>
+                            </View>
                             <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: hp(2) }}>
                                 <Text style={{ fontSize: 20, color: "gray" }}>Total Payment</Text>
                                 <Text style={{ fontSize: 20, color: "skyblue", fontWeight: "bold" }}>Rp. {listTransaksi[selectedIdx].totalPayment}</Text>
-                            </View> 
-                        </View>:null
+                            </View>
+                        </View> : null
                 }
             </Overlay>
         </View>
